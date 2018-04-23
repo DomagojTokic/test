@@ -32,15 +32,7 @@ public class Main {
 			checkForCycles(node);
 		}
 		
-		List<Node> roots = new ArrayList<>();
-		for (Node node : nodes) {
-			if (node.getParents().isEmpty())
-				roots.add(node);
-		}
-		
-		for (Node root : roots) {
-			System.out.println(root.toString(0));
-		}
+		printResult(nodes);
 	}
 	
 	/**
@@ -110,6 +102,23 @@ public class Main {
 	}
 	
 	/**
+	 * Prints out the resulting graph.
+	 *
+	 * @param nodes Graph nodes
+	 */
+	public static void printResult(Collection<Node> nodes) {
+		List<Node> roots = new ArrayList<>();
+		for (Node node : nodes) {
+			if (node.getParents().isEmpty())
+				roots.add(node);
+		}
+		
+		for (Node root : roots) {
+			System.out.println(root.toString(0));
+		}
+	}
+	
+	/**
 	 * Reads input file and creates list of pairs.
 	 *
 	 * @param filePath Path to input file
@@ -127,7 +136,7 @@ public class Main {
 				
 				if (names.length == 2) {
 					pairs.add(new Pair(names[0], names[1]));
-				} else if(line.trim().length() != 0) {
+				} else if (line.trim().length() != 0) {
 					throw new AltimaException("Found invalid input: " + line);
 				}
 			}
