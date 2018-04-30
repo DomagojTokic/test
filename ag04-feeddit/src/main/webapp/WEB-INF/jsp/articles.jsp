@@ -34,7 +34,7 @@
                         <td>${article.author}</td>
 
                         <td>
-                            <form:form method="POST" action="/articles?page=${page}&sort=${sort}&vote"
+                            <form:form method="POST" action="/articles?size=${size}&page=${page}&sort=${sort}&vote"
                                        modelAttribute="vote">
                                 <form:hidden path="articleId" value="${article.id}"/>
                                 <form:hidden path="username" value="${pageContext.request.remoteUser}"/>
@@ -43,7 +43,7 @@
                             </form:form>
                         </td>
                         <td>
-                            <form:form method="POST" action="/articles?page=${page}&sort=${sort}&vote"
+                            <form:form method="POST" action="/articles?size=${size}&page=${page}&sort=${sort}&vote"
                                        modelAttribute="vote">
                                 <form:hidden path="articleId" value="${article.id}"/>
                                 <form:hidden path="username" value="${pageContext.request.remoteUser}"/>

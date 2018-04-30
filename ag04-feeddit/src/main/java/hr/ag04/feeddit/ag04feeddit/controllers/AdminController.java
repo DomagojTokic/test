@@ -1,19 +1,11 @@
 package hr.ag04.feeddit.ag04feeddit.controllers;
 
-import hr.ag04.feeddit.ag04feeddit.enums.ArticleSortEnum;
+import hr.ag04.feeddit.ag04feeddit.dto.DeleteArticleDTO;
 import hr.ag04.feeddit.ag04feeddit.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 public class AdminController {
@@ -33,15 +25,21 @@ public class AdminController {
 		model.addObject("sortList", articleService.getSortsMap(sort));
 		model.addObject("search", search == null ? "" : search);
 		model.addObject("pageSizes", articleService.getPageSizes());
-		model.addObject("size", size == null ? 0 : size);
+		model.addObject("size", size == null ? articleService.DEFAULT_PAGE_SIZE : size);
+		model.addObject("articleIds", new DeleteArticleDTO());
 		
 		return model;
 	}
+	
 	@ResponseBody
-	@RequestMapping(value = {"/delete"}, method = RequestMethod.POST)
-	public void deleteArticles(@RequestParam(value = "articles") List<String> articles) {
-		//articleService.deleteArticles(articles);
+	@RequestMapping(value = {"/admin"}, params = {"delete", "!vote", "!add", "!cancel"}, method = RequestMethod.POST)
+	public ModelAndView deleteArticles(@ModelAttribute("Articles") DeleteArticleDTO deleteArticleDTO, @RequestParam
+			(required = false) Integer page, @RequestParam(required = false) String sort, @RequestParam(required =
+			false) String search, @RequestParam(required = false) Integer size) {
+		String[] articleIds = deleteArticleDTO.getArticleIds();
 		
-		System.out.println("Success");
+		articleService.deleteArticles(articleIds);
+		
+		return getArticles(page, sort, search, size);
 	}
 }

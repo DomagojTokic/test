@@ -11,10 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ArticleService {
@@ -117,7 +114,8 @@ public class ArticleService {
 	
 	public void createArticle(ArticleDTO articleDTO) {
 		User user = userRepository.findByName(articleDTO.getUsername()).get();
-		Article article = new Article(user, articleDTO.getHeadline(), articleDTO.getAuthor(), articleDTO.getUrl());
+		Article article = new Article(user, articleDTO.getHeadline().trim(), articleDTO.getAuthor().trim(), articleDTO
+				.getUrl().trim());
 		articleRepository.saveAndFlush(article);
 	}
 	
@@ -153,10 +151,14 @@ public class ArticleService {
 		return sizesMap;
 	}
 	
-	public Integer deleteArticles(Long[] articleIds) {
-		for(int i = 0; i < articleIds.length; i++) {
-			articleRepository.deleteById(articleIds[i]);
+	public void deleteArticles(String[] stringIds) {
+		for (int i=0; i < stringIds.length; i++) {
+			try {
+				Long id = Long.parseLong(stringIds[i]);
+				articleRepository.deleteById(id);
+			} catch (NumberFormatException e) {
+				System.err.println("Invalid article id format given: " + stringIds[i]);
+			}
 		}
-		return articleIds.length;
 	}
 }
