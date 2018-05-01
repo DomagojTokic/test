@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Controls main page where user can give votes to articles and view them in chosen order and page size.
+ */
 @Controller
 public class ArticleController {
 	
@@ -30,7 +33,7 @@ public class ArticleController {
 	@RequestMapping(value = {"/articles", "/"}, method = RequestMethod.GET)
 	public ModelAndView getArticles(@RequestParam(required = false) Integer page, @RequestParam(required = false)
 			String sort, @RequestParam(required = false) String search, @RequestParam(required = false)
-			Integer size) {
+			                                Integer size) {
 		ModelAndView model = new ModelAndView("articles");
 		model.addObject("articleList", articleService.getPage(page, size, sort, search));
 		model.addObject("page", page == null ? 0 : page);
@@ -48,7 +51,7 @@ public class ArticleController {
 	@RequestMapping(value = "/articles", params = {"vote", "!add", "!cancel"}, method = RequestMethod.POST)
 	public ModelAndView vote(@ModelAttribute("Vote") VoteDTO vote, @RequestParam Integer page, @RequestParam(required
 			= false) String sort, @RequestParam(required = false) String search, @RequestParam(required = false)
-	                         Integer size) {
+			                         Integer size) {
 		voteService.vote(vote);
 		
 		return getArticles(page, sort, search, size);
@@ -57,15 +60,15 @@ public class ArticleController {
 	@RequestMapping(value = "/articles", params = {"add", "!vote", "!cancel"}, method = RequestMethod.POST)
 	public ModelAndView createArticle(@ModelAttribute("Article") ArticleDTO article, BindingResult binding, ModelAndView mav,
 	                                  final RedirectAttributes redirectAttributes) {
-		if(article.getAuthor() == null || article.getAuthor().trim() == "" || article.getHeadline() == null ||
+		if (article.getAuthor() == null || article.getAuthor().trim() == "" || article.getHeadline() == null ||
 				article.getHeadline().trim() == "" || article.getUrl() == null || article.getUrl().trim() == "") {
-			if(article.getAuthor() == null || article.getAuthor().trim() == "") {
+			if (article.getAuthor() == null || article.getAuthor().trim() == "") {
 				redirectAttributes.addFlashAttribute("authorErrorMsg", authorErrorMsg);
 			}
-			if(article.getHeadline() == null || article.getHeadline().trim() == "") {
+			if (article.getHeadline() == null || article.getHeadline().trim() == "") {
 				redirectAttributes.addFlashAttribute("headlineErrorMsg", headlineErrorMsg);
 			}
-			if(article.getUrl() == null || article.getUrl().trim() == "") {
+			if (article.getUrl() == null || article.getUrl().trim() == "") {
 				redirectAttributes.addFlashAttribute("urlErrorMsg", urlErrorMsg);
 			}
 			mav.setViewName("redirect:/create_article");

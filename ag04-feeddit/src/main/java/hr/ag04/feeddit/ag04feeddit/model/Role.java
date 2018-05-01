@@ -2,6 +2,9 @@ package hr.ag04.feeddit.ag04feeddit.model;
 
 import javax.persistence.*;
 
+/**
+ * User role used by Spring Security.
+ */
 @Entity
 @Table(name = "role")
 public class Role {

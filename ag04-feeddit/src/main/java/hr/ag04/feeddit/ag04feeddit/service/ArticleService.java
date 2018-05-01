@@ -8,11 +8,13 @@ import hr.ag04.feeddit.ag04feeddit.repository.ArticleRepository;
 import hr.ag04.feeddit.ag04feeddit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+/**
+ * Service which implements functions which retrieve, paginate, sort and delete articles.
+ */
 @Service
 public class ArticleService {
 	
@@ -24,6 +26,14 @@ public class ArticleService {
 	
 	public static final int DEFAULT_PAGE_SIZE = 5;
 	
+	/**
+	 * Controller used method which returns desired article list page from database article repository.
+	 * @param page Page number
+	 * @param pageSize Size of the page
+	 * @param sortString Used sort
+	 * @param search Search string (if search is used)
+	 * @return Article list page
+	 */
 	public List<Article> getPage(Integer page, Integer pageSize, String sortString, String search) {
 		if(page == null) {
 			page = 0;
@@ -91,6 +101,11 @@ public class ArticleService {
 		}
 	}
 	
+	/**
+	 * Returns the number of article list pages of given size.
+	 * @param pageSize Article list page size
+	 * @return Number of article list pages
+	 */
 	public long getNumberOfPages(Integer pageSize) {
 		if(articleRepository.count() == 0) {
 			return 0;
@@ -101,17 +116,10 @@ public class ArticleService {
 		}
 	}
 	
-	public boolean hasPage(Integer page) {
-		if(page == null) {
-			page = 0;
-		}
-		if(page == 0) {
-			return articleRepository.count() > 0;
-		} else {
-			return (articleRepository.count() - 1) / (DEFAULT_PAGE_SIZE*page) >= 1;
-		}
-	}
-	
+	/**
+	 * Creates article from article data transfer object.
+	 * @param articleDTO Article data transfer object
+	 */
 	public void createArticle(ArticleDTO articleDTO) {
 		User user = userRepository.findByName(articleDTO.getUsername()).get();
 		Article article = new Article(user, articleDTO.getHeadline().trim(), articleDTO.getAuthor().trim(), articleDTO
@@ -119,6 +127,11 @@ public class ArticleService {
 		articleRepository.saveAndFlush(article);
 	}
 	
+	/**
+	 * Returns map of sorts where in it sort column can be mapped only to one sort direction (asc/desc)
+	 * @param selectedSort Currently selected sort
+	 * @return Sorts map
+	 */
 	public Map<String, String> getSortsMap(String selectedSort) {
 		Map<String, String> sortsMap = new LinkedHashMap<>();
 		sortsMap.put(ArticleSortEnum.VOTES_ASC.toString(), ArticleSortEnum.VOTES_ASC.getName());
@@ -142,6 +155,10 @@ public class ArticleService {
 		return sortsMap;
 	}
 	
+	/**
+	 * Returns the list of page sizes.
+	 * @return List of page sizes
+	 */
 	public Map<Integer, String> getPageSizes() {
 		Map<Integer, String> sizesMap = new LinkedHashMap<>();
 		sizesMap.put(5, "5");
@@ -151,6 +168,10 @@ public class ArticleService {
 		return sizesMap;
 	}
 	
+	/**
+	 * Deletes articles with given article ids.
+	 * @param stringIds Article ids
+	 */
 	public void deleteArticles(String[] stringIds) {
 		for (int i=0; i < stringIds.length; i++) {
 			try {

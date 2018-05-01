@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Spring Security configuration bean.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableJpaRepositories(basePackages = "hr.ag04.feeddit.ag04feeddit.repository")

@@ -7,6 +7,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+/**
+ * Entrance in Spring Boot web application.
+ */
 @SpringBootApplication
 public class Ag04FeedditApplication extends SpringBootServletInitializer {
 

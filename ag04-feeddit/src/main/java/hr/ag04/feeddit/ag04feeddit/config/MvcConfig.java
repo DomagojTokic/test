@@ -8,6 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+/**
+ * Configuration which maps controller addresses to view (.jsp) files
+ */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 

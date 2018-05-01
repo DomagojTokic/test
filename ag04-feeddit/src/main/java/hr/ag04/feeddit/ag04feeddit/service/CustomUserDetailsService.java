@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Service which handles user login.
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 	

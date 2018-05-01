@@ -11,7 +11,7 @@ public enum ArticleSortEnum {
 
 	private String name;
 	
-	private ArticleSortEnum(String name) {
+	ArticleSortEnum(String name) {
 		this.name = name;
 	}
 	

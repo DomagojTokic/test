@@ -1,5 +1,8 @@
 package hr.ag04.feeddit.ag04feeddit.dto;
 
+/**
+ * Object which view uses to send article data to controller.
+ */
 public class ArticleDTO {
 	
 	private int votes;

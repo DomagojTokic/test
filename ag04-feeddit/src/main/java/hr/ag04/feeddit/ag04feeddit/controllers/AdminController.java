@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Controls /admin page where user can delete articles.
+ */
 @Controller
 public class AdminController {
 	

@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service which implement service which vote controller uses to process vote requests.
+ */
 @Service
 public class VoteService {
 	
@@ -24,6 +27,10 @@ public class VoteService {
 	@Autowired
 	private VoteRepository voteRepository;
 	
+	/**
+	 * Creates vote from vote data transfer objects and updates it in database.
+	 * @param voteDTO vote data transfer object
+	 */
 	public void vote(VoteDTO voteDTO) {
 		User user = userRepository.findByName(voteDTO.getUsername()).get();
 		Article article = articleRepository.getOne(voteDTO.getArticleId());

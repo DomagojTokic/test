@@ -3,6 +3,9 @@ package hr.ag04.feeddit.ag04feeddit.model;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Article vote (+1/+1)
+ */
 @Entity
 @Table(name = "votes")
 public class Vote {
